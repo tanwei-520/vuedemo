@@ -1,6 +1,6 @@
 <template>
     <div class="zhong">
-        <h2>动态</h2>
+        <p style=" font-size:24px">使用计算属性监听选中状态-localStorage-sessionStorage以及深度监听</p>
         <input type="text" style="width:400px;" class=" form-control" @keyup.enter="add()" v-model="text">
      <div class="one">
         <ul>

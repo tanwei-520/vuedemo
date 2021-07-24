@@ -51,7 +51,7 @@ export default {
     data(){
         return{
           tableData:[],
-          loading: true,
+          loading: false,
           stripe:true,
           dialogVisible:false,
           url2:''
