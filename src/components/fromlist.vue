@@ -1,13 +1,13 @@
 <template>
-    <div>
+    <div element-loading-text="拼命加载中">
     <el-table
     v-loading="loading"
-    element-loading-text="拼命加载中"
     :data="tableData"
     stripe
     style="width: 100%">
     <el-table-column
       type="index"
+      :index="indexcunt"
       label="序号"
       width="50">
     </el-table-column>
@@ -32,6 +32,20 @@
       </template>
     </el-table-column>
   </el-table>
+  <div class="block">
+    <span class="demonstration">分页</span>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :hideOnSinglePage="true"
+      :current-page="currentPage4"
+      :page-sizes="[5, 10, 15, 20]"
+      :page-size="pagesize"
+      hide-on-single-page="show"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="count">
+    </el-pagination>
+  </div>
   <el-dialog
   title="图片详情"
   :visible.sync="dialogVisible"
@@ -41,7 +55,7 @@
     <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
   </span>
 </el-dialog>
-    </div>    
+</div>    
 </template>
 
 <script>
@@ -50,16 +64,37 @@ import axios from 'axios';
 export default {
     data(){
         return{
+          name:'',
           tableData:[],
           loading: false,
           stripe:true,
           dialogVisible:false,
-          url2:''
+          url2:'',
+          show:false,
+          currentPage4: 1,//当前页数
+          pagesize:5,//每页显示
+          count:0//总数
         }
     },
     mounted(){
       PubSub.subscribe('search',(msg,suoname)=>{
+        let that=this
+       that.getmain(suoname);
+      })
+    },
+    methods: {
+      fangda(url){
+        this.url2=url;
+        this.dialogVisible=true;
+      },
+      handleCurrentChange(val){
+        this.currentPage4=val;
+        console.log(this.name);
+        this.getmain(this.name);
+      },
+      getmain(suoname){
         const url='https://api.github.com/search/users?q='+suoname;
+        this.name=suoname;
         this.tableData=[];
         this.loading=true;
         axios.get(url).then(response => { // 得到返回结果数据
@@ -69,21 +104,36 @@ export default {
                 //   avatar_url:item.avatar_url,
                 //   name:item.name
                 // }));将数据转为指定的名称
-                this.tableData=data;
+                this.tableData=data.slice((this.currentPage4-1)*this.pagesize,this.pagesize*this.currentPage4);
+                console.log((this.currentPage4-1)*this.pagesize);
+                console.log(this.pagesize*this.currentPage4);
+                this.count=data.length;
+                if(this.count!=0 && this.count>this.pagesize)
+                this.show=true;
                 this.loading=false;})
           .catch(error => {
                     alert(error.msg)})
-      })
-    },
-    methods: {
-      fangda(url){
-        this.url2=url;
-        this.dialogVisible=true;
+      },
+      handleSizeChange(val){//每页显示数修改时调用
+        this.pagesize=val;
+        this.currentPage4=1;
+        this.getmain(this.name);
+      },
+      indexcunt(index){//使序号跟着页数动
+        return (this.currentPage4-1)*this.pagesize+index+1
       }
     },
 }
 </script>
 
 <style>
-
+ul{
+  width:auto;
+}
+li{
+  width: auto;
+  border: 0;
+  float:none;
+  display: inherit;
+}
 </style>
