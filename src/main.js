@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import Fromis from './Fromis'
+import Router from './Router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css'; 
 Vue.use(ElementUI);
@@ -16,4 +17,9 @@ new Vue({
   el:'#app2',
   components:{Fromis},
   template:'<Fromis/>'
+})
+new Vue({
+  el:'#app3',
+  components:{Router},
+  template:'<Router/>'
 })
