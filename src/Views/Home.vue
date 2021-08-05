@@ -1,7 +1,5 @@
 <template>
-    <div class="three">
-        <h3>路由</h3>
-    </div>
+    <h2>anbout</h2>
 </template>
 
 <script>
@@ -15,8 +13,5 @@ export default {
 </script>
 
 <style>
-.three{
-    width: 500px;
-    float: left;
-}
+
 </style>

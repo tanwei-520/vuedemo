@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import App from './App'
 import Fromis from './Fromis'
-import Router from './Router'
+import Router2 from './Router2'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css'; 
+import  router from './router/'
 Vue.use(ElementUI);
-//入口js 创建VUE实例
+//入口js 创建VUE实例 配置对象一般为特定属性值，不能随意修改
 Vue.config.productionTip = false
 //el看index.html
 new Vue({
@@ -20,6 +21,7 @@ new Vue({
 })
 new Vue({
   el:'#app3',
-  components:{Router},
-  template:'<Router/>'
+  components:{Router2},
+  template:'<Router2/>',
+  router
 })
