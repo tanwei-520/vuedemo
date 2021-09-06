@@ -51,7 +51,7 @@ export default {
     },
     computed:{
         chexks(){
-            return this.list.reduce((sum,list)=>sum+(list.check?1:0),0)
+            return this.list.reduce((sum,list)=>sum+(list.check?1:0),0)//计算数组元素相加后的总和
         },
         isall:{
             get(){
@@ -79,6 +79,7 @@ export default {
         add(){
             const is={tille:this.text,check:false};
             this.list.unshift(is);
+            this.text='';
         },
         geturl(){
             const url='https://api.github.com/search/repositories?q=vue&sort=stars';

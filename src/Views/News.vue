@@ -1,7 +1,6 @@
 <template>
 <div>
-    <h2>ABOUT</h2>
-    <input type="text">
+    <router-view></router-view>
 </div>
 </template>
 
@@ -9,7 +8,6 @@
 export default {
     data(){
         return{
-            
         }
     }
 }

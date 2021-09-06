@@ -21,7 +21,18 @@
       label="头像"
       width="100">
       <template slot-scope="scope">
-        <img :src="scope.row.avatar_url" min-width="70" height="70" @click="fangda(scope.row.avatar_url)"/>
+        <el-skeleton style="width:70px;height: 70px;" :loading="loading2" animated :throttle="700">
+         <template slot="el-card">
+          <el-skeleton-item
+           variant="image"
+           style="width: 70px; height: 70px;"
+          />
+         </template>
+        <!-- <img :src="scope.row.avatar_url" min-width="70" height="70" @click="fangda(scope.row.avatar_url)"/> -->
+          <el-card :body-style="{ width: '70px', height: '70px',padding:'0px' }">
+             <img :src="scope.row.avatar_url" min-width="70" height="70" @click="fangda(scope.row.avatar_url)"/>
+          </el-card>
+        </el-skeleton>
       </template>
     </el-table-column>
     <el-table-column
@@ -33,7 +44,6 @@
     </el-table-column>
   </el-table>
   <div class="block">
-    <span class="demonstration">分页</span>
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
@@ -73,7 +83,8 @@ export default {
           show:false,
           currentPage4: 1,//当前页数
           pagesize:5,//每页显示
-          count:0//总数
+          count:0,//总数,
+          loading2:true
         }
     },
     mounted(){
@@ -89,7 +100,7 @@ export default {
       },
       handleCurrentChange(val){
         this.currentPage4=val;
-        console.log(this.name);
+        //console.log(this.name);
         this.getmain(this.name);
       },
       getmain(suoname){
@@ -97,6 +108,7 @@ export default {
         this.name=suoname;
         this.tableData=[];
         this.loading=true;
+        this.loading2=true;
         axios.get(url).then(response => { // 得到返回结果数据
                 const data=response.data.items;
                 // const data=response.data.items.map(item =>({
@@ -105,12 +117,14 @@ export default {
                 //   name:item.name
                 // }));将数据转为指定的名称
                 this.tableData=data.slice((this.currentPage4-1)*this.pagesize,this.pagesize*this.currentPage4);
-                console.log((this.currentPage4-1)*this.pagesize);
-                console.log(this.pagesize*this.currentPage4);
+                //console.log((this.currentPage4-1)*this.pagesize);
+               // console.log(this.pagesize*this.currentPage4);
                 this.count=data.length;
                 if(this.count!=0 && this.count>this.pagesize)
                 this.show=true;
-                this.loading=false;})
+                this.loading=false;
+                setTimeout(() => (this.loading2 = false), 1200)
+                })
           .catch(error => {
                     alert(error.msg)})
       },
