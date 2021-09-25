@@ -10,10 +10,12 @@
     </textarea>
     <img src="../../img/vuex.png">
     <p style="font-size:16px;">check：{{$store.state.count}}，count is {{odd}}</p>
-    <button @click="add()" class="btn btn-default">+</button>
+    <button @click="add()" class="btn btn-default">对象+</button>
+    <button @click="add2()" class="btn btn-default">数组+</button>
     <button @click="dep()" class="btn btn-danger">-</button>
     <button @click="ifq()" class="btn btn-primary">偶·</button>
     <input type="text" v-model="$store.state.count">
+    <h6>{{$store.state.a1}},{{$store.state.a2}}</h6>
 </div>
 </template>
 
@@ -32,16 +34,27 @@ export default {
         ...mapGetters(['odd'])
     },
     methods: {
-        // add(){
-        //     this.$store.dispatch('add')//触发store
-        // },
+        add(){
+            let a=this.$store.state.count+1;
+            console.log('a:'+a);
+            const ac={
+                a1:a+1,
+                a2:a-1,
+            }
+            console.log(ac.a1,ac.a2);
+            this.$store.dispatch('add',{ac})//触发store  this.$store.dispatch('dep',data)data此组件管理的数据
+        },
+        add2(){
+            let a=this.$store.state.count+1;
+            this.$store.dispatch('add2',[a+2,a-2])
+        },
         // dep(){
         //     this.$store.dispatch('dep')
         // },
         // ifq(){
         //     this.$store.dispatch('ifq')
         // },
-        ...mapActions(['add','dep','ifq'])//简化代码mapActions({store.js的名称:改组件调用函数的名称})尽量一致
+        ...mapActions(['dep','ifq'])//简化代码mapActions({store.js的名称:改组件调用函数的名称})尽量一致
     },
 }
 </script>

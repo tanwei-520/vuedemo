@@ -27,7 +27,7 @@
 
 <script>
 import axios from 'axios';
-import fromlist  from './components/fromlist'
+import fromlist from './components/fromlist.vue'
 import suosuo from './components/suosuo'
 export default {
     data(){
@@ -74,6 +74,7 @@ export default {
             }
         },
         checkall(value){
+            //this.list.forEach(lists=>{if(lists.tille==='000')lists.check=value});
             this.list.forEach(lists=>lists.check=value);
         },
         add(){

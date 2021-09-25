@@ -4,12 +4,21 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 const state={
-    count:0
+    count:0,
+    a1:0,
+    a2:2,
 }
 
 const mutations={
-    add(state){
-        state.count++
+    add(state,{ac}){
+        state.count++;
+        state.a1=ac.a1;
+        state.a2=ac.a2;
+    },
+    add2(state,[a1,a2]){
+        state.count++;
+        state.a1=a1;
+        state.a2=a2;
     },
     dep(state){
         state.count--
@@ -18,9 +27,13 @@ const mutations={
 
 const actions={
     //增加的action
-    add({commit}){
+    add({commit},{ac}){
         //提交mutations
-        commit('add')
+        commit('add',{ac})
+    },
+    add2({commit},[a1,a2]){
+        //提交mutations
+        commit('add2',[a1,a2])
     },
     dep({commit}){
         commit('dep')

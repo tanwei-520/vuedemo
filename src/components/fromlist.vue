@@ -89,8 +89,10 @@ export default {
     },
     mounted(){
       PubSub.subscribe('search',(msg,suoname)=>{
-        let that=this
-       that.getmain(suoname);
+        let that=this;
+        this.name=suoname;
+        console.log('suoname:'+suoname);
+        that.getmain(suoname);
       })
     },
     methods: {
@@ -105,7 +107,6 @@ export default {
       },
       getmain(suoname){
         const url='https://api.github.com/search/users?q='+suoname;
-        this.name=suoname;
         this.tableData=[];
         this.loading=true;
         this.loading2=true;
